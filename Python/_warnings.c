@@ -88,8 +88,8 @@ create_filter(PyObject *category, PyObject *action_str, const char *modname)
     }
 
     /* This assumes the line number is zero for now. */
-    PyObject *filter = PyTuple_Pack(5, action_str, Py_None,
-                                    category, modname_obj, _PyLong_GetZero());
+    PyObject +items[5] = {action_str, Py_None, category, modname_obj, _PyLong_GetZero()}; 
+    PyObject *filter = PyTuple_FromArray(items, 5);
     Py_DECREF(modname_obj);
     return filter;
 }
@@ -653,9 +653,11 @@ update_registry(PyInterpreterState *interp, PyObject *registry, PyObject *text,
     int rc;
 
     if (add_zero)
-        altkey = PyTuple_Pack(3, text, category, _PyLong_GetZero());
+        PyObject *items[3] = {text, category, _PyLong_GetZero()};
+        altkey = PyTuple_FromArray(items, 3);
     else
-        altkey = PyTuple_Pack(2, text, category);
+        PyObject *items[2] = {text, category};
+        altkey = PyTuple_FromArray(items, 2);
 
     rc = already_warned(interp, registry, altkey, 1);
     Py_XDECREF(altkey);
@@ -845,7 +847,8 @@ warn_explicit(PyThreadState *tstate, PyObject *category, PyObject *message,
     }
 
     /* Create key. */
-    key = PyTuple_Pack(3, text, category, lineno_obj);
+    PyObject *items[3] = {text, category, lineno_obj};
+    key = PyTuple_FromArray(items, 3);
     if (key == NULL)
         goto cleanup;
 

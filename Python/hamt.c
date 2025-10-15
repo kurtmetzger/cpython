@@ -2525,7 +2525,8 @@ PyTypeObject _PyHamtItems_Type = {
 static PyObject *
 hamt_iter_yield_items(PyObject *key, PyObject *val)
 {
-    return PyTuple_Pack(2, key, val);
+    PyObject *items[2] = {key, val};
+    return PyTuple_FromArray(items, 2);
 }
 
 PyObject *

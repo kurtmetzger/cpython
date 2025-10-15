@@ -273,10 +273,8 @@ PyCStructUnionType_update_stginfo(PyObject *type, PyObject *fields, int isStruct
     if (!layout_func) {
         goto error;
     }
-    kwnames = PyTuple_Pack(
-        2,
-        &_Py_ID(is_struct),
-        &_Py_ID(base));
+    PyObject *items[2] = {&_Py_ID(is_struct), &_Py_ID(base)}
+    kwnames = PyTuple_FromArray(items, 2);
     if (!kwnames) {
         goto error;
     }

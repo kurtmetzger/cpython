@@ -2306,8 +2306,8 @@ defdict_reduce(PyObject *op, PyObject *Py_UNUSED(dummy))
         Py_DECREF(args);
         return NULL;
     }
-    result = PyTuple_Pack(5, Py_TYPE(dd), args,
-                          Py_None, Py_None, iter);
+    PyObject *items[5] = {Py_TYPE(dd), args, Py_None, Py_None, iter};
+    result = PyTuple_FromArray(items, 5);
     Py_DECREF(iter);
     Py_DECREF(items);
     Py_DECREF(args);
