@@ -4946,7 +4946,8 @@ type_new_get_bases(type_new_ctx *ctx, PyObject **type)
     if (nbases == 0) {
         // Adjust for empty tuple bases
         ctx->base = &PyBaseObject_Type;
-        PyObject *new_bases = PyTuple_Pack(1, ctx->base);
+        PyObject *items[1] = {ctx->base};
+        PyObject *new_bases = PyTuple_FromArray(items, 1);
         if (new_bases == NULL) {
             return -1;
         }

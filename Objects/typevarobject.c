@@ -803,7 +803,8 @@ typevar_typing_prepare_subst_impl(typevarobject *self, PyObject *alias,
             return NULL;
         }
         if (dflt != &_Py_NoDefaultStruct) {
-            PyObject *new_args = PyTuple_Pack(1, dflt);
+            PyObject *items[1] = {dflt};
+            PyObject *new_args = PyTuple_FromArray(items, 1);
             Py_DECREF(dflt);
             if (new_args == NULL) {
                 Py_DECREF(params);
@@ -1541,7 +1542,8 @@ unpack_iter(PyObject *self)
     if (unpacked == NULL) {
         return NULL;
     }
-    PyObject *tuple = PyTuple_Pack(1, unpacked);
+    PyObject *items[1] = {unpacked};
+    PyObject *tuple = PyTuple_FromArray(items, 1);
     if (tuple == NULL) {
         Py_DECREF(unpacked);
         return NULL;

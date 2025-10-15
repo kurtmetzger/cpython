@@ -5228,7 +5228,8 @@ time_getstate(PyDateTime_Time *self, int proto)
             /* Set the first bit of the first byte */
             PyBytes_AS_STRING(basestate)[0] |= (1 << 7);
         if (! HASTZINFO(self) || self->tzinfo == Py_None)
-            result = PyTuple_Pack(1, basestate);
+            PyObject *items[1] = {basestate};
+            result = PyTuple_FromArray(items, 1);
         else
             result = PyTuple_Pack(2, basestate, self->tzinfo);
         Py_DECREF(basestate);

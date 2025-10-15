@@ -2400,7 +2400,8 @@ set___reduce___impl(PySetObject *so)
     keys = PySequence_List((PyObject *)so);
     if (keys == NULL)
         goto done;
-    args = PyTuple_Pack(1, keys);
+    PyObject *items[1] = {keys};
+    args = PyTuple_Pack(items, 1);
     if (args == NULL)
         goto done;
     state = _PyObject_GetState((PyObject *)so);
