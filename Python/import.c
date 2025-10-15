@@ -4447,8 +4447,9 @@ _imp_find_frozen_impl(PyObject *module, PyObject *name, int withdata)
         }
     }
 
-    PyObject *items[3] = {data, info.is_package ? Py_True : Py_False, origname};
-    PyObject *result = PyTuple_FromArray(items, 3);
+    PyObject *result = PyTuple_Pack(3, data ? data : Py_None,
+                                    info.is_package ? Py_True : Py_False,
+                                    origname ? origname : Py_None);
     Py_XDECREF(origname);
     Py_XDECREF(data);
     return result;
